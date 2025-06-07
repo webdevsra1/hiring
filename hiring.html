@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Join Our Team - We're Hiring Drivers</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .dynamic-background {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: transparent;
+      z-index: 1;
+    }
+
+    .floating-elements {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .floating-element {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: floatAround 15s linear infinite;
+    }
+
+    .floating-element:nth-child(1) { width: 60px; height: 60px; top: 20%; left: 10%; animation-delay: 0s; }
+    .floating-element:nth-child(2) { width: 40px; height: 40px; top: 60%; right: 15%; animation-delay: -5s; }
+    .floating-element:nth-child(3) { width: 80px; height: 80px; bottom: 20%; left: 20%; animation-delay: -10s; }
+
+    @keyframes floatAround {
+      0% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-30px) rotate(120deg); }
+      66% { transform: translateY(30px) rotate(240deg); }
+      100% { transform: translateY(0px) rotate(360deg); }
+    }
+
+    .container {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      z-index: 3;
+    }
+
+    .background-pattern {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0.1;
+      background-image: radial-gradient(circle at 25% 25%, #fff 2px, transparent 2px),
+                        radial-gradient(circle at 75% 75%, #fff 2px, transparent 2px);
+      background-size: 50px 50px;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(1deg); }
+    }
+
+    .poster {
+      background: linear-gradient(145deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 4rem 3rem;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .poster:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .urgent-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: linear-gradient(135deg, #feca57, #ff9ff3);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+      box-shadow: 0 5px 15px rgba(254, 202, 87, 0.4);
+      z-index: 10;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .logo-container {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .logo-placeholder {
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+
+    .logo-frame {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #667eea, #764ba2, #ff6b6b, #feca57, #48cae4, #667eea);
+      padding: 3px;
+      animation: pulseZoom 3s ease-in-out infinite;
+      filter: drop-shadow(0 10px 30px rgba(102, 126, 234, 0.3));
+    }
+
+
+    @keyframes pulseZoom {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 5px 15px rgba(102, 126, 234, 0.3));
+      }
+      50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 10px 30px rgba(102, 126, 234, 0.5));
+      }
+    }
+
+    .logo-glow {
+      position: absolute;
+      top: -15px; left: -15px; right: -15px; bottom: -15px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.3), transparent);
+      opacity: 0;
+      filter: blur(20px);
+      transition: opacity 0.3s ease;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .logo-content {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #f8fafc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: relative;
+      z-index: 2;
+      box-shadow: inset 0 0 30px rgba(102, 126, 234, 0.1), 0 0 20px rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-border {
+      position: absolute;
+      top: -3px; left: -3px; right: -3px; bottom: -3px;
+      border-radius: 50%;
+      background: conic-gradient(from 45deg, #667eea, #764ba2, #ff6b6b, #feca57, #48cae4, #667eea);
+      opacity: 0.6;
+      animation: spin 4s linear infinite reverse;
+      z-index: 1;
+      filter: blur(2px);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1);
+        opacity: 0.3;
+      }
+      50% { 
+        transform: scale(1.05);
+        opacity: 0.6;
+      }
+    }
+
+    .logo-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .actual-logo {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+      transition: all 0.3s ease;
+    }
+
+    .main-heading {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .sub-heading {
+      font-size: 1.5rem;
+      color: #4a5568;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2rem auto;
+      padding: 0;
+      list-style: none;
+    }
+
+    .benefits li {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.7));
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .benefits li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .benefits li:hover::before {
+      left: 100%;
+    }
+
+    .benefits li::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, transparent 30%, rgba(255, 255, 255, 0.2) 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 12px;
+    }
+
+    .benefits li:hover::after {
+      opacity: 1;
+    }
+
+    .benefits li:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.9), rgba(238, 90, 36, 0.8));
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .benefit-icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #ffffff, #f1f5f9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #667eea;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .benefits li:hover .benefit-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .benefit-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(100%) scale(0);
+      }
+      20% {
+        opacity: 1;
+        transform: translateY(80%) scale(1);
+      }
+      80% {
+        opacity: 1;
+        transform: translateY(20%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(0%) scale(0);
+      }
+    }
+
+    .benefits li:nth-child(1) .benefit-icon::before { content: '🚐'; }
+    .benefits li:nth-child(2) .benefit-icon::before { content: '🏆'; }
+    .benefits li:nth-child(3) .benefit-icon::before { content: '💼'; }
+    .benefits li:nth-child(4) .benefit-icon::before { content: '📍'; }
+    .benefits li:nth-child(5) .benefit-icon::before { content: '💰'; }
+    .benefits li:nth-child(6) .benefit-icon::before { content: '🎯'; }
+
+    .cta-button {
+      background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+      color: white;
+      border: none;
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 2rem;
+      box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px rgba(255, 107, 107, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dynamic-background" id="dynamicBg"></div>
+  <div class="floating-elements">
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+  </div>
+
+  <div class="container">
+    <div class="poster">
+      <div class="urgent-badge">Hiring Now!</div>
+      <div class="logo-container">
+        <div class="logo-placeholder">
+          <div class="logo-glow"></div>
+          <div class="logo-frame">
+            <div class="logo-border"></div>
+            <div class="logo-content">
+              <img src="2.png" alt="Flyvan Logo" class="actual-logo">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="main-heading">We're Hiring</h1>
+      <p class="sub-heading">Join Flyvan Express – Drive Forward</p>
+
+      <ul class="benefits">
+        <li>
+          <div class="benefit-particles"></div>
+          <div class="benefit-icon"></div>
+          Owner operator driver positions (G license)
+        </li>
+        <li>
+          <div class="benefit-particles"></div>
+          <div class="benefit-icon"></div>
+          Owning a mini van has priority
+        </li>
+        <li>
+          <div class="benefit-particles"></div>
+          <div class="benefit-icon"></div>
+          Delivery work experience preferred
+        </li>
+        <li>
+          <div class="benefit-particles"></div>
+          <div class="benefit-icon"></div>
+          Location – Pembroke, Ottawa
+        </li>
+        <li>
+          <div class="benefit-particles"></div>
+          <div class="benefit-icon"></div>
+          Earn up to ~$1500/week
+        </li>
+        <li>
+          <div class="benefit-particles"></div>
+          <div class="benefit-icon"></div>
+          Dedicated runs
+        </li>
+      </ul>
+
+      <button class="cta-button" onclick="redirectToCareers()">Apply Now</button>
+    </div>
+  </div>
+
+  <script>
+    function redirectToCareers() {
+      const button = document.querySelector('.cta-button');
+      button.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        window.open("https://flyvanexpress.com/career", '_blank');
+        button.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    const dynamicBg = document.getElementById('dynamicBg');
+
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      dynamicBg.style.background = `radial-gradient(600px circle at ${x}% ${y}%, rgba(255, 255, 255, 0.2), rgba(102, 126, 234, 0.15) 20%, rgba(118, 75, 162, 0.1) 40%, rgba(255, 107, 107, 0.08) 60%, transparent 80%)`;
+
+      const poster = document.querySelector('.poster');
+      const rect = poster.getBoundingClientRect();
+      const posterX = e.clientX - rect.left;
+      const posterY = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = (posterY - centerY) / 20;
+      const rotateY = (centerX - posterX) / 20;
+      poster.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+
+      const logoGlow = document.querySelector('.logo-glow');
+      logoGlow.style.opacity = (posterX >= 0 && posterX <= rect.width && posterY >= 0 && posterY <= rect.height) ? '0.3' : '0';
+
+      let glow = poster.querySelector('.poster-glow');
+      if (!glow) {
+        glow = document.createElement('div');
+        glow.className = 'poster-glow';
+        glow.style.position = 'absolute';
+        glow.style.top = 0;
+        glow.style.left = 0;
+        glow.style.width = '100%';
+        glow.style.height = '100%';
+        glow.style.pointerEvents = 'none';
+        glow.style.zIndex = 2;
+        glow.style.borderRadius = '24px';
+        poster.appendChild(glow);
+      }
+
+      if (posterX >= 0 && posterX <= rect.width && posterY >= 0 && posterY <= rect.height) {
+        const glowX = ((posterX / rect.width) * 100).toFixed(1);
+        const glowY = ((posterY / rect.height) * 100).toFixed(1);
+        glow.style.background = `radial-gradient(circle at ${glowX}% ${glowY}%, rgba(255, 255, 255, 0.4), transparent 50%)`;
+        glow.style.opacity = '1';
+      } else {
+        glow.style.opacity = '0';
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      const poster = document.querySelector('.poster');
+      poster.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      const glow = poster.querySelector('.poster-glow');
+      if (glow) glow.style.opacity = '0';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      const elements = document.querySelectorAll('.floating-element');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      elements.forEach((element, index) => {
+        const speed = (index + 1) * 10;
+        const xOffset = (x - 0.5) * speed;
+        const yOffset = (y - 0.5) * speed;
+        element.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+      });
+    });
+
+    // Enhanced benefit box interactions
+    const benefitBoxes = document.querySelectorAll('.benefits li');
+    
+    benefitBoxes.forEach((box, index) => {
+      // Create particle system for each box
+      const particleContainer = box.querySelector('.benefit-particles');
+      
+      // Generate particles on hover
+      box.addEventListener('mouseenter', () => {
+        createParticles(particleContainer, 8);
+        
+        // Add ripple effect
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.top = '50%';
+        ripple.style.left = '50%';
+        ripple.style.width = '0';
+        ripple.style.height = '0';
+        ripple.style.background = 'rgba(102, 126, 234, 0.2)';
+        ripple.style.borderRadius = '50%';
+        ripple.style.transform = 'translate(-50%, -50%)';
+        ripple.style.animation = 'rippleEffect 0.6s ease-out';
+        ripple.style.pointerEvents = 'none';
+        
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes rippleEffect {
+            to {
+              width: 200px;
+              height: 200px;
+              opacity: 0;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        box.appendChild(ripple);
+        
+        setTimeout(() => {
+          box.removeChild(ripple);
+          document.head.removeChild(style);
+        }, 600);
+      });
+      
+      // Clear particles on mouse leave
+      box.addEventListener('mouseleave', () => {
+        clearParticles(particleContainer);
+      });
+    });
+    
+    function createParticles(container, count) {
+      for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 2 + 's';
+        particle.style.animationDuration = (1.5 + Math.random()) + 's';
+        container.appendChild(particle);
+      }
+    }
+    
+    function clearParticles(container) {
+      const particles = container.querySelectorAll('.particle');
+      particles.forEach(particle => {
+        particle.style.animation = 'none';
+        setTimeout(() => {
+          if (container.contains(particle)) {
+            container.removeChild(particle);
+          }
+        }, 100);
+      });
+    }
+  </script>
+</body>
+</html>
