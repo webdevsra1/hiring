@@ -388,6 +388,36 @@
       transform: translateY(-2px);
       box-shadow: 0 20px 40px rgba(255, 107, 107, 0.5);
     }
+
+    @media (max-width: 768px) {
+      .poster {
+        padding: 2rem 1.5rem;
+        max-width: 90%;
+      }
+
+      .main-heading {
+        font-size: 2.2rem;
+      }
+
+      .sub-heading {
+        font-size: 1rem;
+      }
+
+      .benefits {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      .logo-placeholder {
+        width: 120px;
+        height: 120px;
+      }
+
+      .cta-button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -601,6 +631,35 @@
         }, 100);
       });
     }
+    // Gyro tilt for poster (mobile)
+    function initGyroTilt() {
+      if (typeof DeviceOrientationEvent !== 'undefined' &&
+          typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              window.addEventListener('deviceorientation', handleGyroTilt);
+            }
+          })
+          .catch(console.error);
+      } else {
+        window.addEventListener('deviceorientation', handleGyroTilt);
+      }
+    }
+
+    function handleGyroTilt(event) {
+      const gamma = Math.max(-25, Math.min(25, event.gamma || 0));
+      const beta = Math.max(-25, Math.min(25, event.beta || 0));
+
+      const poster = document.querySelector('.poster');
+      if (poster) {
+        poster.style.transform =
+          `perspective(1000px) rotateX(${-beta}deg) rotateY(${gamma}deg) translateY(-5px)`;
+      }
+    }
+
+    // Enable on tap (required for iOS)
+    document.querySelector('.poster').addEventListener('click', initGyroTilt, { once: true });
   </script>
 </body>
 </html>
